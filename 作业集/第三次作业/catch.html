@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+<title>捕获异常 | 酷python</title>
+
+    <link rel="shortcut icon" href="/static/public/pic/favicon.ico">
+    
+<meta name="keywords" content="python 捕获异常">
+<meta name="description" content="python 使用try ... except来捕获异常, 可以在finally语句块里做清理操作...">
+
+    
+    <link rel="stylesheet" href="/static/uikit/css/uikit.min.css" />
+<link rel="stylesheet" href="/static/uikit/css/main.css" />
+<link rel="stylesheet" href="/static/mk/css/mk.css" />
+<link href="/static/public/css/bootstrap.min.css" rel="stylesheet">
+<script src="/static/public/js/jquery-3.0.0.min.js"></script>
+<script src="/static/public/js/bootstrap.bundle.min.js"></script>
+<script src="/static/uikit/js/uikit.min.js"></script>
+<script src="/static/mk/js/mk.js"></script>
+<script src="/static/public/js/navbar.js"></script>
+<link rel="stylesheet" href="/static/highlight/styles/atom-one-light.min.css" />
+<script src="/static/highlight/highlight.min.js"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?a827c304fcb444eb2b1f0e43b5db73b8";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+<body style="font-size: 16px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="navbar-brand">
+            <!--<a class="navbar-brand" href="#">菜鸟教程</a>-->
+        <img src="/static/public/pic/coolpython_pic.png" width="100" height="100%" alt="酷python" />
+    </div>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">python教程<b class="caret bottom-up"></b></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/python_primary/python_primary_tutorial.html">python基础教程</a>
+                    <a class="dropdown-item" href="/python_senior/index.html">python进阶教程</a>
+                    <a class="dropdown-item" href="/python_programming_thinking/what_is_programming_thinking.html">python编程思维</a>
+                    <a class="dropdown-item" href="/design_mode/base.html">python设计模式</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">python收徒</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/hibiscus/python_guide.html" ><strong>入门指导辅助</strong></a>
+                    <a class="dropdown-item" href="/hibiscus/python_primary.html" ><strong>0基础入门培训</strong></a>
+                    <a class="dropdown-item" href="/hibiscus/python_stu.html" ><strong>项目实战训练</strong></a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">web开发<b class="caret bottom-up"></b></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/http_protocol/index.html" >http协议</a>
+                    <a class="dropdown-item" href="/flask_tutorial/index.html">flask教程</a>
+                    <a class="dropdown-item" href="/tornado/tornado_base.html">tornado教程</a>
+                    <a class="dropdown-item" href="/fastapi/fastapi_base.html">fastapi教程</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">python与数据库<b class="caret bottom-up"></b></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/python_db/redis/python_redis_tutorial.html">redis</a>
+                    <a class="dropdown-item" href="/python_db/python_mysql_tutorial.html">mysql</a>
+                    <a class="dropdown-item" href="/python_db/python-mongo-tutorial.html">mongo</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">python数据分析<b class="caret bottom-up"></b></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/data_analysis/pandas/pandas_base.html">pandas</a>
+                    <a class="dropdown-item" href="/data_analysis/numpy/numpy_tutorial.html">numpy</a>
+                    <a class="dropdown-item" href="/data_analysis/matplotlib/matplotlib_tutorial.html">matplotlib</a>
+                    <a class="dropdown-item" href="/data_analysis/excel/openpyxl-index.html">excel自动化</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">GUI编程<b class="caret bottom-up"></b></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/tk/tk_primary/index.html">tkinter入门</a>
+                </div>
+            </li>
+
+            <li class="nav-item"><a class="nav-link" href="/informal_essay/index.html">python日常总结</a></li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">python项目源码解析<b class="caret bottom-up"></b></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/pysrc/littlepro/base.html">小项目</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">其他<b class="caret bottom-up"></b></a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/python_interview/base.html">python面试题</a>
+                    <a class="dropdown-item" href="/py_answer/index.html">百问百答</a>
+                </div>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="row" style="min-height: calc(100vh - 142px);">
+    <div class="col-md-2" style="margin-left:0px; margin-top:10px;">
+        
+<div class="card" style="margin-left:10px;background-color: #49a5ff">
+    <div class="card-header">
+        <div><a href="/python_primary/python_primary_tutorial.html" style="color:white">python基础教程</a></div>
+    </div>
+</div>
+<ul id="x-wiki-index" class="uk-nav uk-nav-side" style="margin-right:0px;margin-left:10px;">
+    <div id="python_introduction" depth="0" style="position:relative;margin-left:15px;">
+        <i id="tutorial_root" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/introduction/introduction_index.html" class="x-wiki-index-item">第1章、python简介及环境搭建</a>
+        <div id="/python_primary/introduction/python_introduction.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/introduction/python_introduction.html" class="x-wiki-index-item">python的诞生与发展,现状与未来</a>
+        </div>
+        <div id="/python_primary/introduction/windows_install_python.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/introduction/windows_install_python.html" class="x-wiki-index-item">windows电脑安装python</a>
+        </div>
+        <div id="/python_primary/introduction/mac_install_python.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/introduction/mac_install_python.html" class="x-wiki-index-item">mac电脑安装python</a>
+        </div>
+        <div id="/python_primary/introduction/code_and_execute.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/introduction/code_and_execute.html" class="x-wiki-index-item">python的代码写在哪里，以及怎么执行python代码</a>
+        </div>
+        <div id="/python_primary/introduction/install_pycharm.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/introduction/install_pycharm.html" class="x-wiki-index-item">安装配置pycharm</a>
+        </div>
+        <div id="/python_primary/introduction/terminal.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/introduction/terminal.html" class="x-wiki-index-item">什么是终端</a>
+        </div>
+        <div id="/python_primary/introduction/interpreter.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/introduction/interpreter.html" class="x-wiki-index-item">什么是交互式解释器</a>
+        </div>
+
+    </div>
+
+    <div id="basic_grammar" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/basic_grammar/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/basic_grammar/index.html" class="x-wiki-index-item">第2章、基本语法</a>
+        <div id="/python_primary/basic_grammar/identifier.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/basic_grammar/identifier.html" class="x-wiki-index-item">标识符与保留字</a>
+        </div>
+        <div id="/python_primary/basic_grammar/indent.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/basic_grammar/indent.html" class="x-wiki-index-item">行与缩进</a>
+        </div>
+        <div id="/python_primary/basic_grammar/note.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/basic_grammar/note.html" class="x-wiki-index-item">注释</a>
+        </div>
+        <div id="/python_primary/basic_grammar/print.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/basic_grammar/print.html" class="x-wiki-index-item">print</a>
+        </div>
+
+    </div>
+
+    <div id="data_type" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/data_type/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/data_type/index.html" class="x-wiki-index-item">第3章、数据类型</a>
+        <div id="/python_primary/data_type/number.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_type/number.html" class="x-wiki-index-item">数字类型</a>
+        </div>
+        <div id="/python_primary/data_type/bin_int_hex_oct.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_type/bin_int_hex_oct.html" class="x-wiki-index-item">python进制转换</a>
+        </div>
+        <div id="/python_primary/data_type/bool.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_type/bool.html" class="x-wiki-index-item">bool类型</a>
+        </div>
+        <div id="/python_primary/data_type/variable.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_type/variable.html" class="x-wiki-index-item">变量的概念</a>
+        </div>
+        <div id="string" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='/python_primary/data_type/str_index.html' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="/python_primary/data_type/str_index.html" class="x-wiki-index-item">字符串</a>
+            <div id="/python_primary/data_type/str_conception.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_conception.html" class="x-wiki-index-item">字符串概念</a>
+            </div>
+            <div id="/python_primary/data_type/str_escape.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_escape.html" class="x-wiki-index-item">转义字符</a>
+            </div>
+            <div id="/python_primary/data_type/str_cut.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_cut.html" class="x-wiki-index-item">字符串切片操作</a>
+            </div>
+            <div id="/python_primary/data_type/str_format.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_format.html" class="x-wiki-index-item">字符串格式化</a>
+            </div>
+            <div id="/python_primary/data_type/str_method.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_method.html" class="x-wiki-index-item">字符串方法</a>
+            </div>
+            <div id="/python_primary/data_type/str_transfer.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_transfer.html" class="x-wiki-index-item">字符串与int,float,bool相互转换</a>
+            </div>
+            <div id="/python_primary/data_type/str_ascii.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_ascii.html" class="x-wiki-index-item">ASCII码</a>
+            </div>
+            <div id="/python_primary/data_type/str_encoding.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_encoding.html" class="x-wiki-index-item">一文读懂ascii，unicode, utf-8，彻底解决UnicodeEncodeError的问题</a>
+            </div>
+            <div id="/python_primary/data_type/str-split-empty-string.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str-split-empty-string.html" class="x-wiki-index-item">split函数切分字符串时为什么会产生空字符串</a>
+            </div>
+
+            <div id="/python_primary/data_type/str_exercises.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/str_exercises.html" class="x-wiki-index-item">字符串练习题</a>
+            </div>
+        </div>
+
+        <div id="list" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='/python_primary/data_type/list_index.html' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="/python_primary/data_type/list_index.html" class="x-wiki-index-item">列表</a>
+            <div id="/python_primary/data_type/list.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/list.html" class="x-wiki-index-item">列表讲解</a>
+            </div>
+            <div id="/python_primary/data_type/list_nest.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/list_nest.html" class="x-wiki-index-item">嵌套列表</a>
+            </div>
+            <div id="/python_primary/data_type/list_cut.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/list_cut.html" class="x-wiki-index-item">列表切片操作</a>
+            </div>
+            <div id="/python_primary/data_type/list_method.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/list_method.html" class="x-wiki-index-item">列表方法详解</a>
+            </div>
+            <div id="/python_primary/data_type/list_exercises.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/list_exercises.html" class="x-wiki-index-item">列表练习题</a>
+            </div>
+        </div>
+        <div id="/python_primary/data_type/tuple.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_type/tuple.html" class="x-wiki-index-item">元组</a>
+        </div>
+        <div id="dict" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='/python_primary/data_type/dict_index.html' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="/python_primary/data_type/dict_index.html" class="x-wiki-index-item">字典</a>
+            <div id="/python_primary/data_type/dict.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/dict.html" class="x-wiki-index-item">字典讲解</a>
+            </div>
+            <div id="/python_primary/data_type/dict_nest.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/dict_nest.html" class="x-wiki-index-item">嵌套字典</a>
+            </div>
+            <div id="/python_primary/data_type/dict_method.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/dict_method.html" class="x-wiki-index-item">字典方法介绍</a>
+            </div>
+            <div id="/python_primary/data_type/dict_best_practice.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/dict_best_practice.html" class="x-wiki-index-item">字典最佳实践</a>
+            </div>
+
+            <div id="/python_primary/data_type/dict_exercises.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/dict_exercises.html" class="x-wiki-index-item">字典练习题</a>
+            </div>
+        </div>
+        <div id="set" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='/python_primary/data_type/set_index.html' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="/python_primary/data_type/set_index.html" class="x-wiki-index-item">集合</a>
+            <div id="/python_primary/data_type/set.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/set.html" class="x-wiki-index-item">集合讲解</a>
+            </div>
+            <div id="/python_primary/data_type/set_method.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/set_method.html" class="x-wiki-index-item">集合方法讲解</a>
+            </div>
+            <div id="/python_primary/data_type/set_exercises.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/set_exercises.html" class="x-wiki-index-item">集合练习题</a>
+            </div>
+        </div>
+
+        <div id="data_type_essay" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='#' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="#" class="x-wiki-index-item">数据类型杂谈</a>
+            <div id="/python_primary/data_type/list_tuple_set_dict.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/list_tuple_set_dict.html" class="x-wiki-index-item">列表，元组，集合，字典之间互相转换</a>
+            </div>
+            <div id="/python_primary/data_type/container_compare.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/container_compare.html" class="x-wiki-index-item">容器类型数据对比学习</a>
+            </div>
+            <div id="/python_primary/data_type/index_start_from_zero.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/index_start_from_zero.html" class="x-wiki-index-item">为什么大多数编程语言中，索引都是从0开始</a>
+            </div>
+            <div id="/python_primary/data_type/true_equal_one.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/true_equal_one.html" class="x-wiki-index-item">True==1成立以及由此引发的一系列问题</a>
+            </div>
+            <div id="/python_primary/data_type/do-not-modify-list-when-iter-it.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/data_type/do-not-modify-list-when-iter-it.html" class="x-wiki-index-item">不要在遍历python列表时修改列表</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="expression" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/expression/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/expression/index.html" class="x-wiki-index-item">第4章、运算符与表达式</a>
+        <div id="/python_primary/expression/arithmetic_operator.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/arithmetic_operator.html" class="x-wiki-index-item">算术运算符</a>
+        </div>
+        <div id="/python_primary/expression/compare_operator.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/compare_operator.html" class="x-wiki-index-item">比较关系运算符</a>
+        </div>
+        <div id="/python_primary/expression/assign_operator.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/assign_operator.html" class="x-wiki-index-item">赋值运算符</a>
+        </div>
+        <div id="/python_primary/expression/logic_operator.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/logic_operator.html" class="x-wiki-index-item">逻辑运算符</a>
+        </div>
+        <div id="/python_primary/expression/bit_operator.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/bit_operator.html" class="x-wiki-index-item">位运算符</a>
+        </div>
+        <div id="/python_primary/expression/member_operator.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/member_operator.html" class="x-wiki-index-item">成员运算符</a>
+        </div>
+        <div id="/python_primary/expression/identity_operator.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/identity_operator.html" class="x-wiki-index-item">身份运算符</a>
+        </div>
+        <div id="/python_primary/expression/operator_priority.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/operator_priority.html" class="x-wiki-index-item">运算符优先级</a>
+        </div>
+        <div id="/python_primary/expression/expression.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/expression/expression.html" class="x-wiki-index-item">表达式</a>
+        </div>
+    </div>
+
+    <div id="logic_control" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/logic_control/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/logic_control/index.html" class="x-wiki-index-item">第5章、程序控制</a>
+        <div id="condition" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='/python_primary/logic_control/condition_index.html' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="/python_primary/logic_control/condition_index.html" class="x-wiki-index-item">条件控制</a>
+            <div id="/python_primary/logic_control/input.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/input.html" class="x-wiki-index-item">input函数，读取键盘输入</a>
+            </div>
+            <div id="/python_primary/logic_control/flow_chart.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/flow_chart.html" class="x-wiki-index-item">如何画程序流程图</a>
+            </div>
+            <div id="/python_primary/logic_control/condition_if.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/condition_if.html" class="x-wiki-index-item">if语句</a>
+            </div>
+            <div id="/python_primary/logic_control/condition_if_nest.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/condition_if_nest.html" class="x-wiki-index-item">if嵌套</a>
+            </div>
+            <div id="/python_primary/logic_control/condition_logic_branch.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/condition_logic_branch.html" class="x-wiki-index-item">if语句，控制程序走向哪里</a>
+            </div>
+            <div id="/python_primary/logic_control/condition-py-bnf-if.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/condition-py-bnf-if.html" class="x-wiki-index-item">以BNF为基础，理解python if 语句的语法</a>
+            </div>
+
+            <div id="/python_primary/logic_control/python_has_no_switch.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/python_has_no_switch.html" class="x-wiki-index-item">为什么python没有switch/case</a>
+            </div>
+            <div id="/python_primary/logic_control/condition_exercises.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/condition_exercises.html" class="x-wiki-index-item">条件控制练习题</a>
+            </div>
+        </div>
+
+        <div id="loop" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='/python_primary/logic_control/loop_index.html' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="/python_primary/logic_control/loop_index.html" class="x-wiki-index-item">循环控制</a>
+            <div id="/python_primary/logic_control/iter.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/iter.html" class="x-wiki-index-item">迭代遍历思维</a>
+            </div>
+            <div id="/python_primary/logic_control/for.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/for.html" class="x-wiki-index-item">for循环</a>
+            </div>
+            <div id="/python_primary/logic_control/break_continue.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/break_continue.html" class="x-wiki-index-item">continue与break</a>
+            </div>
+            <div id="/python_primary/logic_control/loop_nest.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/loop_nest.html" class="x-wiki-index-item">嵌套循环</a>
+            </div>
+            <div id="/python_primary/logic_control/while.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/while.html" class="x-wiki-index-item">while循环</a>
+            </div>
+            <div id="/python_primary/logic_control/loop_exercises.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/logic_control/loop_exercises.html" class="x-wiki-index-item">程序控制练习题</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="function" depth="0" style="position:relative;margin-left:15px;">
+    <i id="/python_primary/function/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+    <a href="/python_primary/function/index.html" class="x-wiki-index-item">第6章、函数</a>
+    <div id="/python_primary/function/function.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/function.html" class="x-wiki-index-item">函数的定义和调用</a>
+    </div>
+    <div id="/python_primary/function/none.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/none.html" class="x-wiki-index-item">python中的None</a>
+    </div>
+    <div id="/python_primary/function/parameter.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/parameter.html" class="x-wiki-index-item">函数的参数</a>
+    </div>
+    <div id="/python_primary/function/py-builtin-function.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/py-builtin-function.html" class="x-wiki-index-item">内置函数</a>
+    </div>
+    <div id="/python_primary/function/recursion.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/recursion.html" class="x-wiki-index-item">递归函数</a>
+    </div>
+    <div id="/python_primary/function/func_effect.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/func_effect.html" class="x-wiki-index-item">函数存在的意义</a>
+    </div>
+    <div id="/python_primary/function/function_important.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/function_important.html" class="x-wiki-index-item">函数学习要点</a>
+    </div>
+    <div id="/python_primary/function/py-assign-statement.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/py-assign-statement.html" class="x-wiki-index-item">正确理解python的赋值语句</a>
+    </div>
+    <div id="/python_primary/function/func_exercises.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/function/func_exercises.html" class="x-wiki-index-item">函数练习题</a>
+    </div>
+
+
+</div>
+
+    <div id="data_storage" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/data_storage/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/data_storage/index.html" class="x-wiki-index-item">第7章、数据存储</a>
+        <div id="/python_primary/data_storage/file.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_storage/file.html" class="x-wiki-index-item">文件读写</a>
+        </div>
+        <div id="/python_primary/data_storage/py-csv.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_storage/py-csv.html" class="x-wiki-index-item">读写csv文件</a>
+        </div>
+        <div id="/python_primary/data_storage/relative_and_abs_path.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_storage/relative_and_abs_path.html" class="x-wiki-index-item">绝对路径与相对路径</a>
+        </div>
+        <div id="/python_primary/data_storage/five_file_rw_methods.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_storage/five_file_rw_methods.html" class="x-wiki-index-item">5种常用读写文件方法精讲</a>
+        </div>
+        <div id="/python_primary/data_storage/sqlite.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_storage/sqlite.html" class="x-wiki-index-item">sqlite</a>
+        </div>
+        <div id="/python_primary/data_storage/serialize.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/data_storage/serialize.html" class="x-wiki-index-item">序列化</a>
+        </div>
+    </div>
+
+     <div id="module" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/module/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/module/index.html" class="x-wiki-index-item">第8章、模块</a>
+        <div id="/python_primary/module/module.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/module/module.html" class="x-wiki-index-item">模块与模块导入</a>
+        </div>
+        <div id="/python_primary/module/__name__.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/module/__name__.html" class="x-wiki-index-item">if __name__ == '__main__'</a>
+        </div>
+        <div id="/python_primary/module/pip.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/module/pip.html" class="x-wiki-index-item">什么是pip，如何安装管理第三方模块</a>
+        </div>
+        <div id="standard_module" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='/python_primary/module/standard_module_index.html' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="/python_primary/module/standard_module_index.html" class="x-wiki-index-item">常用标准模块导读</a>
+            <div id="/python_primary/module/standard_module_os.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/standard_module_os.html" class="x-wiki-index-item">os</a>
+            </div>
+            <div id="/python_primary/module/standard_module_sys.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/standard_module_sys.html" class="x-wiki-index-item">sys</a>
+            </div>
+            <div id="/python_primary/module/standard_module_math.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/standard_module_math.html" class="x-wiki-index-item">math</a>
+            </div>
+            <div id="/python_primary/module/standard_module_random.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/standard_module_random.html" class="x-wiki-index-item">random</a>
+            </div>
+            <div id="/python_primary/module/standard_module_hashlib.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/standard_module_hashlib.html" class="x-wiki-index-item">hashlib</a>
+            </div>
+            <div id="/python_primary/module/standard_module_statistics.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/standard_module_statistics.html" class="x-wiki-index-item">statistics</a>
+            </div>
+            <div id="/python_primary/module/standard_module_uuid.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/standard_module_uuid.html" class="x-wiki-index-item">uuid</a>
+            </div>
+            <div id="/python_primary/module/standard_module_pathlib.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/standard_module_pathlib.html" class="x-wiki-index-item">pathlib — 面向对象的文件系统路径</a>
+            </div>
+            <div id="/python_primary/module/os-path-index.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/module/os-path-index.html" class="x-wiki-index-item">os.path模块</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="time" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/time/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/time/index.html" class="x-wiki-index-item">第9章、时间处理</a>
+        <div id="/python_primary/time/time.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/time/time.html" class="x-wiki-index-item">time模块</a>
+        </div>
+        <div id="/python_primary/time/calendar.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/time/calendar.html" class="x-wiki-index-item">calendar</a>
+        </div>
+        <div id="/python_primary/time/datetime.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/time/datetime.html" class="x-wiki-index-item">datetime</a>
+        </div>
+        <div id="/python_primary/time/time_format_transfer.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/time/time_format_transfer.html" class="x-wiki-index-item">datetime, 时间戳，字符串，time，各种时间格式的转换</a>
+        </div>
+        <div id="/python_primary/time/time_exercises.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/time/time_exercises.html" class="x-wiki-index-item">时间处理练习题</a>
+        </div>
+    </div>
+    <div id="exection" depth="0" style="position:relative;margin-left:15px;">
+    <i id="/python_primary/exection/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+    <a href="/python_primary/exection/index.html" class="x-wiki-index-item">第10章、错误和异常</a>
+    <div id="/python_primary/exection/exection.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/exection.html" class="x-wiki-index-item">错误和异常</a>
+    </div>
+    <div id="/python_primary/exection/catch.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/catch.html" class="x-wiki-index-item">捕获异常</a>
+    </div>
+    <div id="/python_primary/exection/raise.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/raise.html" class="x-wiki-index-item">主动抛异常</a>
+    </div>
+    <div id="/python_primary/exection/exection_info.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/exection_info.html" class="x-wiki-index-item">异常信息分析与收集</a>
+    </div>
+    <div id="/python_primary/exection/common_error.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/common_error.html" class="x-wiki-index-item">19个常见的python错误和异常</a>
+    </div>
+    <div id="/python_primary/exection/debug.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/debug.html" class="x-wiki-index-item">如何使用pycharm调试python程序</a>
+    </div>
+    <div id="/python_primary/exection/pudb_debug.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/pudb_debug.html" class="x-wiki-index-item">使用pudb在终端调试python代码</a>
+    </div>
+    <div id="/python_primary/exection/friendly-traceback.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/friendly-traceback.html" class="x-wiki-index-item">friendly-traceback，帮你快速定位代码语法错误</a>
+    </div>
+    <div id="/python_primary/exection/py-raise-execption-up.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+        <a href="/python_primary/exection/py-raise-execption-up.html" class="x-wiki-index-item">python如何在捕获到一个异常后再次抛出异常</a>
+    </div>
+
+
+</div>
+
+
+    <div id="oop" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/oop/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/oop/index.html" class="x-wiki-index-item">第11章、面向对象</a>
+        <div id="/python_primary/oop/class.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/oop/class.html" class="x-wiki-index-item">类的定义与实例化</a>
+        </div>
+        <div id="/python_primary/oop/encapsulation.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/oop/encapsulation.html" class="x-wiki-index-item">类的封装</a>
+        </div>
+        <div id="/python_primary/oop/inheritance.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/oop/inheritance.html" class="x-wiki-index-item">类的继承</a>
+        </div>
+        <div id="/python_primary/oop/polymorphism.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/oop/polymorphism.html" class="x-wiki-index-item">类的多态</a>
+        </div>
+        <div id="/python_primary/oop/oop_bankaccount.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/oop/oop_bankaccount.html" class="x-wiki-index-item">python面向对象编程实例---银行账号</a>
+        </div>
+    </div>
+        <div id="easy_oop" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/easy_oop/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/easy_oop/index.html" class="x-wiki-index-item">第12章、轻松学会面向对象</a>
+        <div id="/python_primary/easy_oop/easy_oop_what_is_it.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy_oop_what_is_it.html" class="x-wiki-index-item">1、是什么很重要</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy_oop_attr_method.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy_oop_attr_method.html" class="x-wiki-index-item">2、属性与方法</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy_oop_object.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy_oop_object.html" class="x-wiki-index-item">3、翻译翻译，什么叫对象</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy_oop_magic_dot.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy_oop_magic_dot.html" class="x-wiki-index-item">4、神奇的点</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy_oop_inherit.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy_oop_inherit.html" class="x-wiki-index-item">5、什么是继承</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy_oop_class_descript_content.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy_oop_class_descript_content.html" class="x-wiki-index-item">6、类可以准确描述数据内容</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy_oop_descript_relation.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy_oop_descript_relation.html" class="x-wiki-index-item">7、类可以形象的描述数据之间的关系</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy_oop_restrain_action.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy_oop_restrain_action.html" class="x-wiki-index-item">8、类可以规范数据的行为</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy-oop-class-object-relation.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy-oop-class-object-relation.html" class="x-wiki-index-item">9、类与对象的关系</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy-oop-method-belong-to-class-attribute-belong-too-object.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy-oop-method-belong-to-class-attribute-belong-too-object.html" class="x-wiki-index-item">10、方法属于类，属性属于对象</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy-oop-who-is-self.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy-oop-who-is-self.html" class="x-wiki-index-item">11、灵魂拷问，self是谁?</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy-oop-overwrite.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy-oop-overwrite.html" class="x-wiki-index-item">12、重写，儿大不由爷</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy-oop-tk-attr-method-1.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy-oop-tk-attr-method-1.html" class="x-wiki-index-item">13、填坑，属性和方法(1)</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy-oop-tk-attr-method-2.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy-oop-tk-attr-method-2.html" class="x-wiki-index-item">14、填坑，属性和方法(2)</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy-oop-instance-can-not-modify-cls-attr.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy-oop-instance-can-not-modify-cls-attr.html" class="x-wiki-index-item">15、实例不能修改类属性</a>
+        </div>
+        <div id="/python_primary/easy_oop/easy-oop-public-protected-private.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/easy_oop/easy-oop-public-protected-private.html" class="x-wiki-index-item">16、public, protected, private</a>
+        </div>
+    </div>
+
+    <div id="sort" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/sort/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/sort/index.html" class="x-wiki-index-item">第13章、8大排序算法</a>
+        <div id="/python_primary/sort/pop_sort.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/sort/pop_sort.html" class="x-wiki-index-item">冒泡排序</a>
+        </div>
+        <div id="/python_primary/sort/insert_sort.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/sort/insert_sort.html" class="x-wiki-index-item">插入排序</a>
+        </div>
+        <div id="/python_primary/sort/select_sort.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/sort/select_sort.html" class="x-wiki-index-item">选择排序</a>
+        </div>
+        <div id="/python_primary/sort/shell_sort.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/sort/shell_sort.html" class="x-wiki-index-item">希尔排序</a>
+        </div>
+        <div id="/python_primary/sort/quick_sort.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/sort/quick_sort.html" class="x-wiki-index-item">快速排序</a>
+        </div>
+        <div id="/python_primary/sort/merge_sort.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/sort/merge_sort.html" class="x-wiki-index-item">归并排序</a>
+        </div>
+        <div id="/python_primary/sort/radix_sort.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/sort/radix_sort.html" class="x-wiki-index-item">基数排序</a>
+        </div>
+        <div id="/python_primary/sort/heap_sort.html" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <a href="/python_primary/sort/heap_sort.html" class="x-wiki-index-item">堆排序</a>
+        </div>
+    </div>
+
+    <div id="algorithm" depth="0" style="position:relative;margin-left:15px;">
+        <i id="/python_primary/algorithm_exercises/index.html" onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+        <a href="/python_primary/algorithm_exercises/index.html" class="x-wiki-index-item">第14章、算法练习</a>
+        <div id="easy" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='#' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="#" class="x-wiki-index-item">简单练习题</a>
+            <div id="/python_primary/algorithm_exercises/easy_3_digit_combination.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_3_digit_combination.html" class="x-wiki-index-item">求三位数组合</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_generate_matrix.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_generate_matrix.html" class="x-wiki-index-item">生成矩阵</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_list_shift.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_list_shift.html" class="x-wiki-index-item">列表偏移</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_prime.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_prime.html" class="x-wiki-index-item">随机数生成与遍历</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_second_max.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_second_max.html" class="x-wiki-index-item">寻找列表里第二大的数</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_startswith.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_startswith.html" class="x-wiki-index-item">startswith</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_statistics_char.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_statistics_char.html" class="x-wiki-index-item">统计字符数量</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_str_eq.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_str_eq.html" class="x-wiki-index-item">忽略大小比较字符串是否相等</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_triangle.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_triangle.html" class="x-wiki-index-item">计算三角形的周长和面积</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/easy_yanghui.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/easy_yanghui.html" class="x-wiki-index-item">打印杨辉三角</a>
+            </div>
+        </div>
+        <div id="hard" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='hard_exer' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="#" class="x-wiki-index-item">困难练习题</a>
+            <div id="/python_primary/algorithm_exercises/hard_binary_sum.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_binary_sum.html" class="x-wiki-index-item">二进制求和</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_cout_of_one.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_cout_of_one.html" class="x-wiki-index-item">二进制中为1的位数</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_extract_word.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_extract_word.html" class="x-wiki-index-item">提取单词</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_find_hump.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_find_hump.html" class="x-wiki-index-item">寻找峰值</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_first_only_char.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_first_only_char.html" class="x-wiki-index-item">第一个只出现一次的字符</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_modify_dict_2.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_modify_dict_2.html" class="x-wiki-index-item">修改字典里的value (2)</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_reverse_word.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_reverse_word.html" class="x-wiki-index-item">翻转字符串里的单词</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_score_analyse.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_score_analyse.html" class="x-wiki-index-item">1. 学生成绩分析</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_str_2_int.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_str_2_int.html" class="x-wiki-index-item">字符串转整数</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hard_str_multiplication.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hard_str_multiplication.html" class="x-wiki-index-item">字符串相乘</a>
+            </div>
+        </div>
+
+        <div id="hell" depth="1" style="display:none;position:relative;margin-left:15px;">
+            <i id='hell_exer' onclick="toggleWikiNode(this)" class="uk-icon-plus-square-o" style="position:absolute;margin-left:-1em;padding-top:8px;"></i>
+            <a href="#" class="x-wiki-index-item">地狱练习题</a>
+            <div id="/python_primary/algorithm_exercises/hell_closed_str.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_closed_str.html" class="x-wiki-index-item">亲密字符串</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_k_max_number.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_k_max_number.html" class="x-wiki-index-item">两个有序数组中找第k大的数</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_k_nearest.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_k_nearest.html" class="x-wiki-index-item">找到 K 个最接近的元素</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_longest_prefix.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_longest_prefix.html" class="x-wiki-index-item">最长公共前缀</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_max_square.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_max_square.html" class="x-wiki-index-item">最大正方形</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_original_ip.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_original_ip.html" class="x-wiki-index-item">还原ip地址</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_rain.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_rain.html" class="x-wiki-index-item">接雨水</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_reverse_polish.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_reverse_polish.html" class="x-wiki-index-item">逆波兰表达式求值</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_simple_calculator.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_simple_calculator.html" class="x-wiki-index-item">简单的计算器</a>
+            </div>
+
+            <div id="/python_primary/algorithm_exercises/hell_sub_seq.html" depth="2" style="display:none;position:relative;margin-left:15px;">
+                <a href="/python_primary/algorithm_exercises/hell_sub_seq.html" class="x-wiki-index-item">判断子序列</a>
+            </div>
+    </div>
+
+    </div>
+</ul>
+
+
+    </div>
+
+    <div class="col-md-7" style="margin-left: 40px">
+        <div>
+            <a href="https://item.taobao.com/item.htm?id=747102913485" target="_blank"><img class="img-fluid img-thumbnail" style="margin-top:10px; margin-bottom:5px" src="/static/public/pic/shizhan50.png" /></a>
+        </div>
+        
+<div class="markdown-body">
+<h1 id="toc_0">捕获异常</h1>
+
+<p>一旦发生异常，程序就会终止，这是非常糟糕的事情，这种糟糕体现在两方面</p>
+
+<ol>
+<li>即便发生了异常，业务上可以忽略它，那么程序应当继续执行</li>
+<li>程序终止，使得异常的信息没有被保留下来，不利于问题的分析和总结</li>
+</ol>
+
+<p>为了提高程序的健壮性和解决问题，可以将异常捕获，根据业务要求来做对应的处理</p>
+
+<h2 id="toc_1">1. try</h2>
+
+<p>python中，捕获异常使用try ... except ...这种语法来捕捉异常，下面是一个异常捕获的示例</p>
+
+<pre><code class="language-python">def test(a, b):
+    try:
+        print(a/b)
+    except ZeroDivisionError:
+        print(&quot;0不能作分母&quot;)
+
+if __name__ == &#39;__main__&#39;:
+    test(10, 5)
+    test(10, 0)
+</code></pre>
+
+<p>那些你担心不安全的代码，就可以放在try子句中，也就是try和except之间。</p>
+
+<h2 id="toc_2">2. except</h2>
+
+<p>except 可以指定想要捕获的异常，比如上面的例子中，代码想捕获ZeroDivisionError 异常，如果try子句中发生了别的异常，这个except 就不会捕捉。</p>
+
+<p>这样做，是希望能够针对不同的异常做不同的处理，你可以一次性指定想要捕获的所有异常，比如下面的代码</p>
+
+<pre><code class="language-python">def test(a, b):
+    try:
+        print(a/b)
+    except (ZeroDivisionError, ValueError):
+        return None
+
+if __name__ == &#39;__main__&#39;:
+    test(10, 5)
+    test(10, 0)
+</code></pre>
+
+<p>也可以逐个捕捉</p>
+
+<pre><code class="language-python">def test(a, b):
+    try:
+        print(a/b)
+    except ZeroDivisionError:
+        print(&#39;0不能做分母&#39;)
+    except ValueError:
+        print(&quot;类型错误&quot;)
+    else:
+        print(&#39;什么异常都没发生&#39;)
+
+if __name__ == &#39;__main__&#39;:
+    test(10, 5)
+    test(10, 0)
+</code></pre>
+
+<p>try ... except ... else这种语法，当没有异常发生时，就会执行else语句块里的代码。</p>
+
+<p>如果你对于异常还不熟悉，不知道该捕获哪些异常，则可以用下面的写法</p>
+
+<pre><code class="language-python">def test(a, b):
+    try:
+        print(a/b)
+    except:
+        print(&#39;发生异常&#39;)
+
+if __name__ == &#39;__main__&#39;:
+    test(10, 5)
+    test(10, 0)
+</code></pre>
+
+<p>如果你什么异常都不指定，那么任何异常都会被捕捉，但这不是一个好的写法，因为这意味着，你根本不了解你的程序，因为不了解，你连可能发生的异常是什么都不清楚，这是很致命的，你不了解你自己写出来的程序，还怎么指望它能正常工作？</p>
+
+<h2 id="toc_3">3. finally</h2>
+
+<p>你可以在finally语句块里做清理操作，因为不论try子句里是否发生异常，也不论你在except语句块里做了什么操作，总之，最终一定会执行finally语句块里的代码，这就保证了这里的代码最后一定会被执行，所以，清理收尾的工作一定会进行。</p>
+
+<p>你可以在这里输出日志，你可以做任何你想做的事情。</p>
+
+<pre><code class="language-python">def divide(x, y):
+    try:
+        result = x / y
+    except ZeroDivisionError:
+        print(&quot;division by zero!&quot;)
+    else:
+        print(&quot;result is&quot;, result)
+    finally:
+        print(&quot;executing finally clause&quot;)
+
+if __name__ == &#39;__main__&#39;:
+    divide(10, 5)
+    divide(10, 0)
+</code></pre>
+
+</div>
+
+
+    </div>
+    <div class="col-md-2" style="margin-left: 40px; margin-top:10px;">
+        <div class="img-thumbnail">
+            <img src="/static/public/pic/coolpython.png" />
+            <div class="caption">
+                <p>扫描关注, 与我技术互动</p>
+            </div>
+        </div>
+        <div class="well" style="padding-bottom: 5px">
+            <p>QQ交流群: 211426309</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-left: 60px">
+    <div class="card offset-md-2 col-md-7 " style="margin-top: 50px; margin-bottom: 20px;">
+        <div class="card-header" style="background-color: #49a5ff">
+            加入知识星球, 每天收获更多精彩内容
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <img class="img-fluid" src="/static/public/pic/xingqiu.jpg" />
+                        <div class="caption">
+                            <p align="center">分享日常研究的python技术和遇到的问题及解决方案</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-top: 40px;height: 40px; background-color: #49a5ff" >
+    <footer style="">
+        <div class="container">
+        <p style="margin-left: 300px">CopyRight@copy2021  <a  href='https://beian.miit.gov.cn/' target="_blank">京ICP备17010884号-3</a> </p>
+        </div>
+    </footer>
+</div>
+    <script>
+    	// 开启代码高亮
+        hljs.initHighlightingOnLoad();
+    </script>
+
+
+</body>
+</html>
